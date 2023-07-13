@@ -36,6 +36,11 @@
 ;; this way is consistent, and can be regenerated programatically as
 ;; Racket evolves.
 
+(require ming/mapping/racket)
+(define ming-data (mapping))
+
+
+
 (define (symbol<=? a b)
   (string<=? (symbol->string a) (symbol->string b)))
 
@@ -70,6 +75,11 @@
 ;;; The final lists
 
 (define keywords base-stx)
+(define ming-keywords (map second
+                           (filter (lambda (e)
+                                     (member (car e) keywords))
+                                   ming-data)))
+
 
 (define builtins
   (sort (subtract (remove-duplicates (append rkt+
@@ -87,6 +97,14 @@
                [i (in-naturals)])
       (cond [(< i mid) (values (cons x xs) ys)]
             [else      (values xs (cons x ys))]))))
+(define ming-builtins1 (map second
+                            (filter (lambda (e)
+                                      (member (car e) builtins1))
+                                    ming-data)))
+(define ming-builtins2 (map second
+                            (filter (lambda (e)
+                                      (member (car e) builtins2))
+                                    ming-data)))
 
 (define types Types)
 
@@ -98,6 +116,6 @@
 ;; Enter each submodule to print a quoted list of symbols, then copy
 ;; and paste each list into racket-keywords-and-builtins.el.
 (module+ types    (prn types))
-(module+ keywords (prn keywords))
-(module+ builtins1 (prn builtins1))
-(module+ builtins2 (prn builtins2))
+(module+ keywords (prn (append keywords ming-keywords)))
+(module+ builtins1 (prn (append builtins1 ming-builtins1)))
+(module+ builtins2 (prn (append builtins2 ming-builtins2)))
