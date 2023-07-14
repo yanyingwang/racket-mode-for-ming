@@ -193,6 +193,11 @@
             (group (1+ (or (syntax word) (syntax symbol) (syntax punctuation)))))
        1 font-lock-variable-name-face)
       (,(rx (syntax open-parenthesis)
+            "名" (0+ (or (syntax word) (syntax symbol) (syntax punctuation)))
+            (1+ space)
+            (group (1+ (or (syntax word) (syntax symbol) (syntax punctuation)))))
+       1 font-lock-variable-name-face)
+      (,(rx (syntax open-parenthesis)
             (or "define-syntaxes"
                 "define-values"
                 "define-values-for-syntax")
@@ -205,6 +210,12 @@
       ;; def* -- functions
       (,(rx (syntax open-parenthesis)
             "def" (0+ (or (syntax word) (syntax symbol) (syntax punctuation)))
+            (1+ space)
+            (1+ (syntax open-parenthesis)) ;1+ b/c curried define
+            (group (1+ (or (syntax word) (syntax symbol) (syntax punctuation)))))
+       1 font-lock-function-name-face)
+      (,(rx (syntax open-parenthesis)
+            "名" (0+ (or (syntax word) (syntax symbol) (syntax punctuation)))
             (1+ space)
             (1+ (syntax open-parenthesis)) ;1+ b/c curried define
             (group (1+ (or (syntax word) (syntax symbol) (syntax punctuation)))))

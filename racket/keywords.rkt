@@ -40,7 +40,6 @@
 (define ming-data (mapping))
 
 
-
 (define (symbol<=? a b)
   (string<=? (symbol->string a) (symbol->string b)))
 
@@ -87,6 +86,10 @@
                                      eq?)
                   base-stx)
         symbol<=?))
+(define ming-builtins (map second
+                           (filter (lambda (e)
+                                     (member (car e) builtins))
+                                   ming-data)))
 
 ;; So many builtins, Emacs gives "regexp too long" error, so split into two:
 (define-values (builtins1 builtins2)
@@ -119,3 +122,4 @@
 (module+ keywords (prn (append keywords ming-keywords)))
 (module+ builtins1 (prn (append builtins1 ming-builtins1)))
 (module+ builtins2 (prn (append builtins2 ming-builtins2)))
+(define builtins (prn (append builtins ming-builtins)))
