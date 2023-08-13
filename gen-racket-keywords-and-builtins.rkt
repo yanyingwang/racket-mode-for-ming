@@ -3037,7 +3037,7 @@
 "
             (append racket-type-list (to-ming racket-type-list))
             (append racket-keywords (to-ming racket-keywords))
-            (append racket-builtins-1-of-2 (to-ming racket-builtins-1-of-2))
+            (append racket-builtins-1-of-2 (to-ming racket-builtins-1-of-2) '("􏹔"))
             (append racket-builtins-2-of-2 (to-ming racket-builtins-2-of-2))
             )
     ))
